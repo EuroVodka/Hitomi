@@ -1,6 +1,6 @@
 /* eslint  no-console: off */
+import PropTypes from 'prop-types'
 import React from 'react'
-import { PropTypes } from 'prop-types'
 
 export default class ErrorCatcher extends React.Component {
 	constructor(props) {
@@ -12,6 +12,7 @@ export default class ErrorCatcher extends React.Component {
 
 	componentDidCatch(error, info) {
 		this.setState((state) => ({
+			// @ts-ignore
 			errorFound: !state.errorFound,
 		}))
 		console.log('error: ', error)
@@ -19,15 +20,16 @@ export default class ErrorCatcher extends React.Component {
 	}
 
 	render() {
+		// @ts-ignore
 		return this.state.errorFound ? (
 			<p>
 				Error caught!
-				{}
+				{ }
 				The calculator becomes useless with just a single error.
 			</p>
 		) : (
-				this.props.children
-			)
+			this.props.children
+		)
 	}
 
 	static propTypes = {
