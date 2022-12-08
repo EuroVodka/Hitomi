@@ -11,7 +11,7 @@ class Costs extends React.Component {
 			<form>
 				<input
 					onChange={ this.setCosts }
-					defaultValue={ this.props.totalCost }
+					defaultValue=""
 					type="number"
 					placeholder="..Total cost.."
 				/>
@@ -21,7 +21,6 @@ class Costs extends React.Component {
 
 	static propTypes = {
 		onChangeCosts: PropTypes.func.isRequired,
-		totalCost: PropTypes.number.isRequired,
 	}
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 class Income extends React.Component {
 	setIncome = ( event, field ) => {
-		this.props.onChangeIncome( event.target.value, field )
+		this.props.onChange( event.target.value, field )
 	}
 
 	render() {
@@ -11,13 +11,13 @@ class Income extends React.Component {
 			<form>
 				<input
 					onChange={ ( e ) => this.setIncome( e, 'xSalary' ) }
-					defaultValue={ this.props.xSalary }
+					defaultValue=""
 					type="number"
 					placeholder="..X net salary.."
 				/>
 				<input
 					onChange={ ( e ) => this.setIncome( e, 'ySalary' ) }
-					defaultValue={ this.props.ySalary }
+					defaultValue=""
 					type="number"
 					placeholder="..Y net salary.."
 				/>
@@ -26,9 +26,7 @@ class Income extends React.Component {
 	}
 
 	static propTypes = {
-		onChangeIncome: PropTypes.func.isRequired,
-		xSalary: PropTypes.number.isRequired,
-		ySalary: PropTypes.number.isRequired,
+		onChange: PropTypes.func.isRequired,
 	}
 }
 

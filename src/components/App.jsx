@@ -1,63 +1,38 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import Income from './Income'
 import Costs from './Costs'
 import Output from './Output'
 import ErrorCatcher from './../utilities/ErrorCatcher'
+import { SalariesContext } from '../contexts/SalariesContext'
+import { TotalCostsContext } from '../contexts/TotalCostsContext'
 
-class App extends React.Component {
-	state = {
-		xSalary: 0,
-		ySalary: 0,
-		totalCost: 0,
-	}
+const App = () => {
+	//useContext returns the Context Provider value
+	//which is an Object containing all the salaries related vars and methods
+	const { xSalary, ySalary, onChange } = useContext( SalariesContext )
+	const { totalCost, onChangeCosts } = useContext( TotalCostsContext )
 
-	onChangeAmount = ( value, stateField ) => {
-		this.setState( {
-			[stateField]: parseInt( value, 10 ) || 0,
-		} )
-	}
+	const totalSalaries = xSalary + ySalary
 
-	render() {
-		const { xSalary, ySalary, totalCost } = this.state
+	const percentageX = ( 100 * xSalary ) / totalSalaries
+	const percentageY = ( 100 * ySalary ) / totalSalaries
 
-		const totalSalaries = xSalary + ySalary
+	const amountCostX = ( ( totalCost * percentageX ) / 100 ).toFixed( 2 )
+	const amountCostY = ( ( totalCost * percentageY ) / 100 ).toFixed( 2 )
 
-		const percentageX = ( 100 * xSalary ) / totalSalaries
-		const percentageY = ( 100 * ySalary ) / totalSalaries
-
-		const amoutCostX = ( ( totalCost * percentageX ) / 100 ).toFixed( 2 )
-		const amoutCostY = ( ( totalCost * percentageY ) / 100 ).toFixed( 2 )
-
-		return (
-			<ErrorCatcher>
-				<section>
-					<h2>Relative Expanses</h2>
-					<Income
-						xSalary={ this.state.xSalary }
-						ySalary={ this.state.ySalary }
-						onChangeIncome={ this.onChangeAmount }
-					/>
-					<hr />
-					<Costs
-						totalCost={ this.state.totalCost }
-						onChangeCosts={ this.onChangeAmount }
-					/>
-					<Output amount={ +amoutCostX } />
-					<Output amount={ +amoutCostY } />
-				</section>
-			</ErrorCatcher>
-		)
-	}
+	return (
+		<ErrorCatcher>
+			<section>
+				<h2>Relative Expanses</h2>
+				<Income xSalary={ xSalary } ySalary={ ySalary } onChange={ onChange } />
+				<hr />
+				<Costs totalCost={ totalCost } onChangeCosts={ onChangeCosts } />
+				<Output amount={ +amountCostX } />
+				<Output amount={ +amountCostY } />
+			</section>
+		</ErrorCatcher>
+	)
 }
 
 export default App
-
-/*
-X 2000
-Z 1000
-
-Costs: 1000
-
-X 66.6% = 799.2
-*/
